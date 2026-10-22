@@ -166,7 +166,7 @@ npm ci && npm run build && npm start
 
 Mount persistent storage at `./data` (or set `ONCE_DB_PATH`). Then schedule `POST /api/cron/sweep` with `Authorization: Bearer $CRON_SECRET` every 5 minutes.
 
-Serverless hosts with ephemeral filesystems, such as Vercel, need the Phase 2 database. SQLite on an ephemeral disk would lose data.
+**Netlify (or Vercel) as a quick preview.** `netlify.toml` is included: set the site to deploy the branch that contains the app, with the build command `npm run build` and Node 22. On these serverless hosts the demo database lives in `/tmp` and is reseeded whenever a fresh function instance starts. Expect data, including sign-ins, to reset now and then; the in-app banner says so. For persistent data on serverless, use the Phase 2 database.
 
 ## Phase 2 — integration points
 
