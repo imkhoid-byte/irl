@@ -65,7 +65,7 @@ There is **no chat, no inbox, and no contact-exchange feature**, by design. The 
 ## Architecture
 
 - **Next.js 16** (App Router, Server Components, Server Actions), **TypeScript**, **Tailwind CSS 4**, **Zod**, **React Hook Form** for onboarding and profile editing.
-- **Demo database:** SQLite via `node:sqlite` (`src/server/db/schema.sql`). There are no native dependencies and no external services.
+- **Demo database:** SQLite via `node:sqlite` (`src/server/db/schema.ts`). There are no native dependencies and no external services.
 - **Production schema:** PostgreSQL/Supabase with row-level security (`supabase/migrations/0001_init.sql`). It was applied to Postgres 16 and smoke-tested: a double-accept is refused, overselling is refused, and RLS hides a match from non-participants.
 - **Providers behind interfaces** (`src/server/providers/`): payments, booking, identity, email and file storage. `src/server/context.ts` wires them up.
 

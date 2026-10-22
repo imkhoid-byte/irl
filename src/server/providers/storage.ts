@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { dataDir } from "../db";
 
 export interface FileStorage {
   put(key: string, bytes: Uint8Array): Promise<void>;
@@ -8,7 +9,7 @@ export interface FileStorage {
 }
 
 /** Local-disk storage for demo mode. Supabase Storage (private bucket) replaces this in Phase 2. */
-export function localStorageProvider(root = path.join(/*turbopackIgnore: true*/ process.cwd(), "data", "uploads")): FileStorage {
+export function localStorageProvider(root = path.join(/*turbopackIgnore: true*/ dataDir(), "uploads")): FileStorage {
   const resolve = (key: string) => {
     if (!/^[a-z0-9-]+\.(jpg|png|webp)$/.test(key)) throw new Error("Invalid storage key");
     return path.join(/*turbopackIgnore: true*/ root, key);

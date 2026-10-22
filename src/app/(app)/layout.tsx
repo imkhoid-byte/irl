@@ -5,6 +5,7 @@ import { getDb } from "@/server/db/client";
 import { unreadCount } from "@/server/services/notifications";
 import { requireMember } from "@/server/session";
 import { isDemoMode } from "@/server/context";
+import { isServerless } from "@/server/db";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await requireMember();
@@ -13,7 +14,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="min-h-dvh pb-24 sm:pb-0">
       {isDemoMode() && (
         <div className="bg-ink px-4 py-1.5 text-center text-[11px] tracking-wide text-paper/80">
-          Demo mode · sample venues &amp; people · test payments only — no real money moves
+          Demo mode · sample venues &amp; people · test payments only — no real money moves{isServerless() && " · demo data resets periodically"}
         </div>
       )}
       <header className="sticky top-0 z-30 border-b border-line/70 bg-ivory/90 backdrop-blur-md">

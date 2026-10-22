@@ -1,21 +1,30 @@
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import fs from "node:fs";
 import path from "node:path";
+import { SCHEMA } from "./schema";
 
 export type Db = DatabaseSync;
 type Param = SQLInputValue | boolean | undefined;
 
-const SCHEMA_PATH = path.join(/*turbopackIgnore: true*/ process.cwd(), "src/server/db/schema.sql");
+/** Serverless hosts (Netlify, Vercel, AWS Lambda) only allow writes under /tmp. */
+export function isServerless(): boolean {
+  return !!(process.env.NETLIFY || process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+}
+
+/** Writable directory for the demo database and uploads. */
+export function dataDir(): string {
+  return isServerless() ? "/tmp/once" : path.join(/*turbopackIgnore: true*/ process.cwd(), "data");
+}
 
 export function defaultDbPath(): string {
-  return process.env.ONCE_DB_PATH ?? path.join(/*turbopackIgnore: true*/ process.cwd(), "data", "once.db");
+  return process.env.ONCE_DB_PATH ?? path.join(/*turbopackIgnore: true*/ dataDir(), "once.db");
 }
 
 export function openDb(file: string): Db {
   if (file !== ":memory:") fs.mkdirSync(path.dirname(file), { recursive: true });
   const db = new DatabaseSync(file);
   db.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;");
-  db.exec(fs.readFileSync(SCHEMA_PATH, "utf8"));
+  db.exec(SCHEMA);
   return db;
 }
 

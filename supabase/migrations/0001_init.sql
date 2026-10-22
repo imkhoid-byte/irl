@@ -1,5 +1,5 @@
 -- ONCE production schema for Supabase / PostgreSQL (Phase 2).
--- Mirrors src/server/db/schema.sql (the demo-mode SQLite schema) with native
+-- Mirrors src/server/db/schema.ts (the demo-mode SQLite schema) with native
 -- enums, row-level security and transactional functions.
 --
 -- Access model:

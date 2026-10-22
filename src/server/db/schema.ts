@@ -1,6 +1,8 @@
--- ONCE demo-mode schema (SQLite).
--- The production Postgres/Supabase equivalent, with row-level security,
--- lives in supabase/migrations/0001_init.sql. Keep the two in sync.
+// ONCE demo-mode schema (SQLite), embedded as a module so serverless bundles
+// (Netlify, Vercel) always include it. The production Postgres/Supabase
+// equivalent, with row-level security, lives in supabase/migrations/0001_init.sql.
+
+export const SCHEMA = `
 
 PRAGMA foreign_keys = ON;
 
@@ -379,3 +381,4 @@ CREATE TABLE IF NOT EXISTS mock_provider_requests (
   idempotency_key TEXT PRIMARY KEY,
   created_at      TEXT NOT NULL
 );
+`;
