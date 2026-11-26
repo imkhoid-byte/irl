@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "once": {
+      "command": "npx",
+      "args": ["tsx", "mcp/server.ts"],
+      "env": { "ONCE_USER_EMAIL": "ava@demo.once.date" }
+    }
+  }
+}
