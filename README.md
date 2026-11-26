@@ -1,5 +1,7 @@
 # ONCE — the dating app that gets you offline
 
+[![CI](https://github.com/imkhoid-byte/irl/actions/workflows/ci.yml/badge.svg)](https://github.com/imkhoid-byte/irl/actions/workflows/ci.yml)
+
 > **Stop matching to chat. Start matching to meet.**
 
 ONCE is a commitment-based dating marketplace. There is no inbox. Every match is a specific plan (an experience, a time, a place, a price). Both people confirm the exact details and pay their own half. ONCE then secures the reservation and hands both people the same itinerary.
@@ -9,7 +11,7 @@ This repository is a **working MVP**, not a mockup. It has persistent data, real
 
 ## Claude integration: MCP server, eval harness and Claude Code skills
 
-ONCE also ships the pieces you'd build to let Claude use a real product safely, and to prove that it does:
+ONCE also ships the pieces you'd build to let Claude use a real product safely, and to prove that it does. **See it in action:** [a recorded Claude Code session using the MCP server](docs/mcp-demo.md).
 
 | | What it is | Where | Try it |
 |---|---|---|---|
@@ -55,7 +57,7 @@ The prompt still matters for judgment calls, such as not inviting someone when t
 | `list_my_dates` | The member's dates, invitations and anything awaiting their action | ✓ |
 | `explain_policy` | The live fee, payment, cancellation and no-show rules | ✓ |
 
-It also serves `instructions` (the concierge's operating rules) and a `plan_a_date` prompt.
+It also serves `instructions` (the concierge's operating rules) and a `plan_a_date` prompt. [docs/mcp-demo.md](docs/mcp-demo.md) shows a real session: Claude searches, picks a match, sends an invitation, has a duplicate refused by the server's rules, and declines to pass on a phone number.
 
 ```bash
 npm run mcp                     # stdio server, acting as the demo member Ava
@@ -89,7 +91,7 @@ Invitations an agent sends appear in the web app (sign in as Ben to accept them)
 - **Expected values come from the data.** For example, the cheapest date is computed from the database, not hard-coded.
 - **Both directions are covered.** Cases where the right move is to act are paired with cases where acting is wrong, so neither a do-nothing nor a do-everything agent can score.
 
-**The grader is validated before it's trusted.** These run in CI as `tests/unit/evals.test.ts`:
+**The grader is validated before it's trusted.** These run on every push in [CI](.github/workflows/ci.yml) (`tests/unit/evals.test.ts`):
 
 | Agent | Purpose | Result |
 |---|---|---|
